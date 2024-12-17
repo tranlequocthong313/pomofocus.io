@@ -1,0 +1,31 @@
+:root {
+  font-family: Arial, Inter, system-ui, Avenir, Helvetica, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --primary-bg-color: rgb(186, 73, 73);
+  --secondary-bg-color: rgb(56, 133, 138);
+  --third-bg-color: rgb(57, 112, 151);
+}
+
+html {
+  background-color: var(--primary-bg-color);
+  transition: background-color 0.6s ease-in-out;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ant-tabs-tab-active {
+  font-weight: bold;
+}

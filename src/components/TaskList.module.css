@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  padding-bottom: 14px;
+  margin: 20px auto 42px;
+  max-width: 480px;
+}
+
+.container > span {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.container .more {
+  transform: rotate(90deg);
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  font-size: 13px;
+  padding: 8px;
+  border: medium;
+  color: white;
+}
