@@ -1,9 +1,11 @@
 import { Button, Tabs } from 'antd';
 import style from './TimerContainer.module.css';
 import Timer from './Timer';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTab, pause, start } from '../features/counter/counterSlice';
+import { changeTab, pause, skip, start } from '../features/timerSlice';
+import { StepForwardOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
 
 const items = [
   {
@@ -27,50 +29,68 @@ const items = [
 ];
 
 const TimerContainer = () => {
-  const [tab, setTab] = useState(0);
   const dispatch = useDispatch();
-  const { isRunning } = useSelector((state) => state.counter);
+  const isRunning = useSelector((state) => state.timer.isRunning);
+  const tab = useSelector((state) => state.timer.tab);
+
+  console.log('TimerContainer');
 
   const onChangeTab = (tabIndex) => {
-    setTab(tabIndex - 1);
     dispatch(changeTab(items[tabIndex - 1].name));
   };
 
   useEffect(() => {
-    document.documentElement.style.backgroundColor = `var(${items[tab].color})`;
+    document.documentElement.style.backgroundColor = `var(${
+      items.find((item) => item.name === tab).color
+    })`;
   }, [tab]);
 
   const getColor = () => {
-    return `var(${items[tab].color})`;
+    return `var(${getTab().color})`;
+  };
+
+  const getTab = () => {
+    return items.find((item) => item.name === tab);
   };
 
   return (
     <div className={style.container}>
       <Tabs
         onChange={onChangeTab}
-        defaultActiveKey='main'
+        defaultActiveKey='1'
         items={items}
         centered
         type='card'
+        activeKey={getTab().key}
         tabBarGutter={0}
       />
 
       <Timer />
 
-      <Button
-        className={style.startButton}
-        style={{ color: getColor() }}
-        color='inherit'
-        onClick={() => {
-          if (isRunning) {
-            dispatch(pause());
-          } else {
-            dispatch(start());
-          }
-        }}
-      >
-        {isRunning ? 'Pause' : 'Start'}
-      </Button>
+      <div className={style.actions}>
+        <Button
+          className={style.actionButton}
+          style={{ color: getColor() }}
+          color='inherit'
+          onClick={() => {
+            if (isRunning) {
+              dispatch(pause());
+            } else {
+              dispatch(start());
+            }
+          }}
+        >
+          {isRunning ? 'Pause' : 'Start'}
+        </Button>
+
+        <StepForwardOutlined
+          onClick={() => dispatch(skip())}
+          className={classNames(
+            style.skipIcon,
+            isRunning ? style.visible : null
+          )}
+        />
+      </div>
     </div>
   );
 };

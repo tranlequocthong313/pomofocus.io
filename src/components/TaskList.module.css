@@ -1,20 +1,20 @@
-.container {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid rgba(255, 255, 255, 0.6);
   padding-bottom: 14px;
-  margin: 20px auto 42px;
+  margin: 20px auto 20px;
   max-width: 480px;
 }
 
-.container > span {
+.header > span {
   font-size: 18px;
   font-weight: bold;
   color: white;
 }
 
-.container .more {
+.header .more {
   transform: rotate(90deg);
   border-radius: 4px;
   cursor: pointer;
@@ -24,4 +24,26 @@
   padding: 8px;
   border: medium;
   color: white;
+}
+
+.taskList {
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 18px 14px;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin-top: 8px;
+  font-size: 16px;
+  transition: unset;
+  box-shadow: none;
+  transform: translateY(2px);
 }

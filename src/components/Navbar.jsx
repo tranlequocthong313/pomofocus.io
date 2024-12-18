@@ -5,21 +5,23 @@ import {
   SettingOutlined,
 } from '@ant-design/icons';
 import style from './Navbar.module.css';
+import { Link } from 'react-router';
 
 const { Header } = Layout;
 
 const Navbar = () => {
+  console.log('Navbar');
   return (
     <Header className={style.header}>
       <div className={style.logo}>
-        <a href='/'>
+        <Link to='/'>
           <img
             src='https://pomofocus.io/images/icon-white2.png'
             alt='logo'
             style={{ width: 20, height: 20 }}
           />
           <h1>Pomofocus</h1>
-        </a>
+        </Link>
       </div>
 
       <Menu

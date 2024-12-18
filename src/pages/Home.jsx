@@ -1,8 +1,8 @@
-import { Button, ConfigProvider } from 'antd';
-import Counter from '../components/Counter';
+import AddTask from '../components/AddTask';
+import FinishedCounter from '../components/FinishedCounter';
+import Stats from '../components/Stats';
 import TaskList from '../components/TaskList';
 import TimerContainer from '../components/TimerContainer';
-import { PlusCircleFilled } from '@ant-design/icons';
 import style from './Home.module.css';
 
 const Home = () => {
@@ -10,22 +10,13 @@ const Home = () => {
     <div className={style.container}>
       <TimerContainer />
 
-      <Counter />
+      <FinishedCounter />
 
       <TaskList />
 
-      <ConfigProvider
-        theme={{ components: { Button: { defaultHoverBg: 'transparent' } } }}
-      >
-        <Button
-          className={style.addButton}
-          type='dashed'
-          icon={<PlusCircleFilled />}
-          iconPosition='start'
-        >
-          Add Task
-        </Button>
-      </ConfigProvider>
+      <AddTask />
+
+      <Stats />
     </div>
   );
 };

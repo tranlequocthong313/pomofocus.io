@@ -4,3 +4,9 @@
   color: white;
   text-align: center;
 }
+
+@media screen and (max-width: 786px) {
+  .timer {
+    font-size: 100px;
+  }
+}
