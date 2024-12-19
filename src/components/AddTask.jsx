@@ -3,8 +3,10 @@ import style from './TaskForm.module.css';
 import { PlusCircleFilled } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 import TaskForm from './TaskForm';
+import { useTranslation } from 'react-i18next';
 
 const AddTask = () => {
+  const { t } = useTranslation();
   const [isAdding, setIsAdding] = useState(false);
   const formRef = useRef(null);
 
@@ -47,7 +49,7 @@ const AddTask = () => {
           iconPosition='start'
           onClick={openForm}
         >
-          Add Task
+          {t('Add Task')}
         </Button>
       )}
     </ConfigProvider>

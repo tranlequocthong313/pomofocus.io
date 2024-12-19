@@ -1,16 +1,22 @@
-import { Button, Input } from 'antd';
+import { Button, message } from 'antd';
 import style from './TaskForm.module.css';
 import {
   CaretUpOutlined,
   CaretDownOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteOne, save, update } from '../features/taskSlice';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 const TaskForm = ({ onClose, task, isEditing }, ref) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const { t } = useTranslation();
   const [title, setTitle] = useState(task?.title || '');
   const [est, setEst] = useState(task?.est || 1);
   const [note, setNote] = useState(task?.note || '');
@@ -19,13 +25,56 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
   const estRef = useRef(null);
   const titleRef = useRef(null);
   const dispatch = useDispatch();
+  const TaskSchema = useMemo(
+    () =>
+      z.object({
+        title: z
+          .string({ message: t('Title must not be empty') })
+          .trim()
+          .nonempty({ message: t('Title must not be empty') }),
+        act: z
+          .number({ message: t('Invalid act') })
+          .min(0, { message: t('Act must be greater than or equal 0') })
+          .optional(),
+        est: z
+          .number({ message: t('Invalid estimation') })
+          .min(0, { message: t('Estimation must be greater than or equal 0') }),
+        note: z.string().optional(),
+      }),
+    [t]
+  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: zodResolver(TaskSchema),
+  });
+  const { ref: titleRefFunc, ...titleRest } = register('title', {
+    onChange: (e) => setTitle(e.target.value),
+  });
+  const { ref: estRefFunc, ...estRest } = register('est', {
+    valueAsNumber: true,
+    onChange: (e) => setEst(e.target.value),
+  });
+
+  useEffect(() => {
+    setValue('act', finishedCount);
+    setValue('title', title);
+    setValue('est', est);
+    setValue('note', note);
+  }, [finishedCount, title, est, note, setValue]);
+
+  useEffect(() => {
+    for (const error of Object.values(errors).values()) {
+      messageApi.error(error.message);
+    }
+  }, [errors, messageApi]);
 
   console.log('TaskForm');
 
   const saveTask = () => {
-    if (!titleRef.current.input.value || !est) {
-      return;
-    }
     if (!isEditing) {
       dispatch(
         save({
@@ -66,15 +115,19 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
   };
 
   return (
-    <div ref={ref} className={style.container} id='task-form'>
+    <form ref={ref} className={style.container} id='task-form'>
+      {contextHolder}
       <div className={style.form}>
-        <Input
-          placeholder='What are you working on?'
+        <input
+          {...titleRest}
+          placeholder={t('What are you working on?')}
           className={style.titleInput}
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
           autoFocus
-          ref={titleRef}
+          ref={(e) => {
+            titleRefFunc(e);
+            titleRef.current = e;
+          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               estRef.current.focus();
@@ -88,23 +141,29 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
           <div className={style.estInputs}>
             {isEditing && (
               <>
-                <Input
+                <input
                   value={finishedCount}
                   min={0}
                   step={1}
                   type='number'
-                  onChange={(e) => setFinishedCount(e.target.value)}
+                  {...register('act', {
+                    onChange: (e) => setFinishedCount(e.target.value),
+                    valueAsNumber: true,
+                  })}
                 />
                 <span className={style.seperator}>/</span>
               </>
             )}
-            <Input
+            <input
               value={est}
-              ref={estRef}
-              onChange={(e) => setEst(e.target.value)}
+              ref={(e) => {
+                estRefFunc(e);
+                estRef.current = e;
+              }}
+              {...estRest}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  saveTask();
+                  handleSubmit(saveTask)();
                 }
               }}
             />
@@ -123,17 +182,19 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
               value={note}
               placeholder='Some notes...'
               className={style.note}
-              onChange={(e) => setNote(e.target.value)}
+              {...register('note', {
+                onChange: (e) => setNote(e.target.value),
+              })}
             />
           )}
 
           <div className={style.addButtons}>
             {!isNoting && (
               <Button icon={<PlusOutlined />} onClick={() => setIsNoting(true)}>
-                Add Note
+                {t('Add Note')}
               </Button>
             )}
-            <Button icon={<PlusOutlined />}>Add Project</Button>
+            <Button icon={<PlusOutlined />}>{t('Add Project')}</Button>
           </div>
         </div>
       </div>
@@ -146,18 +207,18 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
           )}
           onClick={deleteTask}
         >
-          Delete
+          {t('Delete')}
         </Button>
         <div className={style.rightActions}>
           <Button className={style.cancelButton} onClick={onClose}>
-            Cancel
+            {t('Cancel')}
           </Button>
-          <Button onClick={saveTask} className={style.saveButton}>
-            Save
+          <Button onClick={handleSubmit(saveTask)} className={style.saveButton}>
+            {t('Save')}
           </Button>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

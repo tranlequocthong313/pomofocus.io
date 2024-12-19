@@ -13,13 +13,14 @@
   border: none;
   border-radius: 4px;
   font-size: 22px;
-  padding: 18px 0;
+  padding: 18px 10px;
   box-shadow: none;
-  border: medium;
   color: rgb(85, 85, 85);
   width: 100%;
   font-weight: 600;
   outline: none;
+  box-sizing: border-box;
+  background-color: white;
 }
 
 .titleInput::placeholder {

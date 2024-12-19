@@ -1,9 +1,13 @@
 import { useSelector } from 'react-redux';
 import style from './Stats.module.css';
+import { useTranslation } from 'react-i18next';
 
 const Stats = () => {
+  const { t } = useTranslation();
   const tasks = useSelector((state) => state.task.tasks);
-  const minutes = useSelector((state) => state.timer.main.minutes);
+  const minutes = useSelector((state) => state.timer.setting.main);
+
+  console.log('Stats');
 
   const getTotalFinishedCount = () => {
     return tasks.reduce((total, task) => total + +task.finishedCount, 0);
@@ -49,8 +53,9 @@ const Stats = () => {
         <span className={style.number}>{getTotalEst()}</span>
       </div>
       <div className={style.item}>
-        Finish At: <span className={style.number}>{getFinishTimeFormat()}</span>{' '}
-        ({getFinishHourFormat()}h)
+        {t('Finished At:')}{' '}
+        <span className={style.number}>{getFinishTimeFormat()}</span> (
+        {getFinishHourFormat()}h)
       </div>
     </div>
   ) : (

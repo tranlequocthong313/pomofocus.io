@@ -16,12 +16,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           Menu: {
             activeBarHeight: 0,
             itemColor: 'white',
-            itemSelectedColor: 'white',
             itemHeight: '32px',
+            itemHoverColor: 'white',
           },
           Tabs: {
             inkBarColor: 'transparent',
-            cardHeight: '100%',
+            cardHeight: 28,
             itemColor: 'white',
             itemActiveColor: 'white',
             itemSelectedColor: 'white',
@@ -29,6 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             colorBgContainer: 'rgba(0,0,0,0.15)',
             borderRadius: 4,
             lineType: 'none',
+          },
+          Switch: {
+            handleSize: 28,
           },
         },
       }}

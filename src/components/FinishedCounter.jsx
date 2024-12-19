@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import style from './FinishedCounter.module.css';
+import { useTranslation } from 'react-i18next';
 
 const descriptions = {
   main: 'Time to focus!',
@@ -8,6 +9,7 @@ const descriptions = {
 };
 
 const FinishedCounter = () => {
+  const { t } = useTranslation();
   const count = useSelector((state) => state.timer[state.timer.tab].count);
   const tab = useSelector((state) => state.timer.tab);
   const selectedTask = useSelector((state) => state.task.selectedTask);
@@ -21,7 +23,7 @@ const FinishedCounter = () => {
   return (
     <div className={style.container}>
       <div className={style.counter}>#{count}</div>
-      <div className={style.description}>{getDescription()}</div>
+      <div className={style.description}>{t(getDescription())}</div>
     </div>
   );
 };

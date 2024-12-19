@@ -23,7 +23,7 @@ const TaskItem = ({ task }) => {
     <li
       className={classNames(
         style.taskItem,
-        selectedTask.id === task.id ? style.selected : null
+        selectedTask?.id === task.id ? style.selected : null
       )}
       key={task.id}
       onClick={() => dispatch(select(task))}

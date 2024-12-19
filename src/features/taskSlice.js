@@ -4,7 +4,31 @@ const getInitialState = () => {
   const state = {};
   state.tasks = [];
   state.selectedTask = null;
+  state.setting = {
+    autoCheckTasks: false,
+    autoSwitchTasks: true,
+  };
   return state;
+};
+
+const checkOne = (state, action, toggle = true) => {
+  const { id } = action.payload;
+  const task = state.tasks.find((task) => task.id === id);
+  if (toggle && task.done) {
+    state.tasks = state.tasks.map((task) => {
+      if (task.id === id) {
+        task.done = !task.done;
+      }
+      return task;
+    });
+  } else {
+    task.done = true;
+    if (state.setting.autoSwitchTasks) {
+      state.tasks = state.tasks.filter((task) => task.id !== id);
+      state.tasks.push(task);
+      state.selectedTask = state.tasks[0];
+    }
+  }
 };
 
 export const taskSlice = createSlice({
@@ -26,21 +50,7 @@ export const taskSlice = createSlice({
       state.selectedTask = action.payload;
     },
     check: (state, action) => {
-      const { id } = action.payload;
-      const task = state.tasks.find((task) => task.id === id);
-      if (task.done) {
-        state.tasks = state.tasks.map((task) => {
-          if (task.id === id) {
-            task.done = !task.done;
-          }
-          return task;
-        });
-      } else {
-        task.done = true;
-        state.tasks = state.tasks.filter((task) => task.id !== id);
-        state.tasks.push(task);
-        state.selectedTask = state.tasks[0];
-      }
+      checkOne(state, action);
     },
     doOne: (state) => {
       if (!state.selectedTask) {
@@ -53,9 +63,33 @@ export const taskSlice = createSlice({
         }
         return task;
       });
+      if (state.selectedTask.finishedCount >= state.selectedTask.est) {
+        if (state.setting.autoCheckTasks) {
+          checkOne(
+            state,
+            {
+              payload: {
+                id: state.selectedTask.id,
+              },
+            },
+            false
+          );
+        }
+        if (state.setting.autoSwitchTasks) {
+          for (const task of state.tasks) {
+            if (!task.done) {
+              state.selectedTask = task;
+              return;
+            }
+          }
+        }
+      }
     },
     deleteOne: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      if (state.selectedTask.id === action.payload) {
+        state.selectedTask = null;
+      }
     },
     update: (state, action) => {
       state.tasks = state.tasks.map((task) => {
@@ -65,10 +99,16 @@ export const taskSlice = createSlice({
         return task;
       });
     },
+    changeSetting: (state, action) => {
+      state.setting = {
+        ...state.setting,
+        ...action.payload,
+      };
+    },
   },
 });
 
-export const { save, select, check, doOne, deleteOne, update } =
+export const { save, select, check, doOne, deleteOne, update, changeSetting } =
   taskSlice.actions;
 
 export default taskSlice.reducer;

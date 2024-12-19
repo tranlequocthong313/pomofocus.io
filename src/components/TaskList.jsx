@@ -4,8 +4,10 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import TaskItem from './TaskItem';
 import { useEffect } from 'react';
 import { doOne } from '../features/taskSlice';
+import { useTranslation } from 'react-i18next';
 
 const TaskList = () => {
+  const { t } = useTranslation();
   const tasks = useSelector((state) => state.task.tasks);
   const isFinishedMain = useSelector((state) => state.timer.isFinishedMain);
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const TaskList = () => {
   return (
     <div className={style.container}>
       <div className={style.header}>
-        <span>Tasks</span>
+        <span>{t('Tasks')}</span>
         <div className={style.more}>
           <EllipsisOutlined />
         </div>

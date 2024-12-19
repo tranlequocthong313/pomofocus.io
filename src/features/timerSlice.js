@@ -5,48 +5,48 @@ const ONE_SECOND = 1000;
 const getInitialState = () => {
   const state = {};
 
+  state.setting = {
+    main: 25,
+    shortBreak: 5,
+    longBreak: 15,
+    autoStartBreak: false,
+    autoStartPomo: false,
+    longBreakInterval: 4,
+  };
+
   state.startAt = Date.now();
 
   state.main = {
     count: 1,
-    minutes: 25,
+    time: getTime(state.startAt, state.setting.main),
   };
-  state.main.time = new Date(
-    state.startAt + state.main.minutes * 60000
-  ).getTime();
 
   state.shortBreak = {
     count: 1,
-    minutes: 5,
+    time: getTime(state.startAt, state.setting.shortBreak),
   };
-  state.shortBreak.time = new Date(
-    state.startAt + state.shortBreak.minutes * 60000
-  ).getTime();
 
   state.longBreak = {
-    time: new Date(state.startAt + 0.1 * 60000).getTime(),
     count: 1,
-    minutes: 15,
+    time: getTime(state.startAt, state.setting.longBreak),
   };
-  state.longBreak.time = new Date(
-    state.startAt + state.longBreak.minutes * 60000
-  ).getTime();
 
   state.tab = 'main';
   state.isRunning = false;
-  state.longBreakInterval = 4;
-  state.autoStartMain = false;
-  state.autoStartBreak = false;
   state.isFinishedMain = false;
 
   return state;
 };
 
+const getTime = (start, mins) => {
+  return new Date(start + mins * 60000).getTime();
+};
+
 const resetState = (state) => {
   state.isRunning = false;
-  state.main.time = timerSlice.getInitialState().main.time;
-  state.shortBreak.time = timerSlice.getInitialState().shortBreak.time;
-  state.longBreak.time = timerSlice.getInitialState().longBreak.time;
+  state.main.time = getTime(state.startAt, state.setting.main);
+  state.shortBreak.time = getTime(state.startAt, state.setting.shortBreak);
+  state.longBreak.time = getTime(state.startAt, state.setting.longBreak);
 };
 
 const finish = (state) => {
@@ -55,7 +55,7 @@ const finish = (state) => {
   if (
     state.tab === 'main' &&
     state[state.tab].count > 0 &&
-    state[state.tab].count % state.longBreakInterval === 0
+    state[state.tab].count % state.setting.longBreakInterval === 0
   ) {
     state.tab = 'longBreak';
   } else if (state.tab === 'main') {
@@ -64,9 +64,9 @@ const finish = (state) => {
     state.tab = 'main';
   }
   resetState(state);
-  if (state.autoStartMain && state.tab === 'main') {
+  if (state.setting.autoStartPomo && state.tab === 'main') {
     state.isRunning = true;
-  } else if (state.autoStartBreak && state.tab !== 'main') {
+  } else if (state.setting.autoStartBreak && state.tab !== 'main') {
     state.isRunning = true;
   }
 };
@@ -94,9 +94,22 @@ export const timerSlice = createSlice({
         finish(state);
       }
     },
+    changeSetting: (state, action) => {
+      const isIdentical = Object.values(state.setting).every(
+        (val, index) => val === Object.values(action.payload)[index]
+      );
+      if (!isIdentical) {
+        state.setting = {
+          ...state.setting,
+          ...action.payload,
+        };
+        resetState(state);
+      }
+    },
   },
 });
 
-export const { start, pause, skip, changeTab, decrease } = timerSlice.actions;
+export const { start, pause, skip, changeTab, decrease, changeSetting } =
+  timerSlice.actions;
 
 export default timerSlice.reducer;
