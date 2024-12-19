@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import style from './Timer.module.css';
 import { useEffect, useRef } from 'react';
-import { decrease } from '../features/timerSlice';
+import { decrease } from '../../features/timerSlice';
 
 const descriptions = {
   main: 'Time to focus!',

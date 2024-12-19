@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteOne, save, update } from '../features/taskSlice';
+import { deleteOne, save, update } from '../../features/taskSlice';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
@@ -20,7 +20,7 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
   const [title, setTitle] = useState(task?.title || '');
   const [est, setEst] = useState(task?.est || 1);
   const [note, setNote] = useState(task?.note || '');
-  const [finishedCount, setFinishedCount] = useState(task?.finishedCount || 0);
+  const [act, setAct] = useState(task?.act || 0);
   const [isNoting, setIsNoting] = useState(false);
   const estRef = useRef(null);
   const titleRef = useRef(null);
@@ -60,11 +60,11 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
   });
 
   useEffect(() => {
-    setValue('act', finishedCount);
+    setValue('act', act);
     setValue('title', title);
     setValue('est', est);
     setValue('note', note);
-  }, [finishedCount, title, est, note, setValue]);
+  }, [act, title, est, note, setValue]);
 
   useEffect(() => {
     for (const error of Object.values(errors).values()) {
@@ -98,7 +98,7 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
           ...task,
           title,
           note,
-          finishedCount,
+          act,
           est: +est,
         })
       );
@@ -142,12 +142,12 @@ const TaskForm = ({ onClose, task, isEditing }, ref) => {
             {isEditing && (
               <>
                 <input
-                  value={finishedCount}
+                  value={act}
                   min={0}
                   step={1}
                   type='number'
                   {...register('act', {
-                    onChange: (e) => setFinishedCount(e.target.value),
+                    onChange: (e) => setAct(e.target.value),
                     valueAsNumber: true,
                   })}
                 />

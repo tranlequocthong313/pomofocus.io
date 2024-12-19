@@ -97,7 +97,6 @@ export const timerSlice = createSlice({
     changeSetting: (state, action) => {
       const shouldResetState =
         state.setting[state.tab] !== action.payload[state.tab];
-      console.log(state.setting[state.tab], action.payload[state.tab]);
 
       state.setting = {
         ...state.setting,
@@ -105,7 +104,7 @@ export const timerSlice = createSlice({
       };
 
       if (shouldResetState) {
-        resetState(state, true);
+        resetState(state, state.isRunning);
       }
     },
   },

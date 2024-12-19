@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import style from './Navbar.module.css';
 import { Link } from 'react-router';
-import Setting from './Setting';
+import Setting from '../Setting';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

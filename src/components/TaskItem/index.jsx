@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import style from './TaskItem.module.css';
 import { CheckCircleOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { check, select } from '../features/taskSlice';
+import { check, select } from '../../features/taskSlice';
 import { useState } from 'react';
-import TaskForm from './TaskForm';
+import TaskForm from '../TaskForm';
 
 const TaskItem = ({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -53,7 +53,7 @@ const TaskItem = ({ task }) => {
         </div>
         <div className={style.statusRight}>
           <span className={style.doneTime}>
-            {task.finishedCount} <span>/ {task.est}</span>{' '}
+            {task.act} <span>/ {task.est}</span>{' '}
           </span>
           <EllipsisOutlined
             className={style.more}

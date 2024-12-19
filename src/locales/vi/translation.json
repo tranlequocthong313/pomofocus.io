@@ -39,5 +39,8 @@
     "Long break must be greater than or equal 0": "Thời gian nghỉ dài phải lớn hơn hoặc bằng 0",
     "Invalid long break interval": "Khoảng cách giữa các lần nghỉ dài không hợp lệ",
     "Long break interval must be greater than or equal 0": "Khoảng cách giữa các lần nghỉ dài phải lớn hơn hoặc bằng 0",
-    "Invalid language": "Ngôn ngữ không hợp lệ"
+    "Invalid language": "Ngôn ngữ không hợp lệ",
+    "Clear finished tasks": "Xóa công việc đã hoàn thành",
+    "Clear act pomodoros": "Xóa hành động pomodoros",
+    "Clear all tasks": "Xóa tất cả công việc"
 }
