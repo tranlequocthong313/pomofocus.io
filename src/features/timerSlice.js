@@ -42,8 +42,8 @@ const getTime = (start, mins) => {
   return new Date(start + mins * 60000).getTime();
 };
 
-const resetState = (state) => {
-  state.isRunning = false;
+const resetState = (state, isRunning = false) => {
+  state.isRunning = isRunning;
   state.main.time = getTime(state.startAt, state.setting.main);
   state.shortBreak.time = getTime(state.startAt, state.setting.shortBreak);
   state.longBreak.time = getTime(state.startAt, state.setting.longBreak);
@@ -95,15 +95,17 @@ export const timerSlice = createSlice({
       }
     },
     changeSetting: (state, action) => {
-      const isIdentical = Object.values(state.setting).every(
-        (val, index) => val === Object.values(action.payload)[index]
-      );
-      if (!isIdentical) {
-        state.setting = {
-          ...state.setting,
-          ...action.payload,
-        };
-        resetState(state);
+      const shouldResetState =
+        state.setting[state.tab] !== action.payload[state.tab];
+      console.log(state.setting[state.tab], action.payload[state.tab]);
+
+      state.setting = {
+        ...state.setting,
+        ...action.payload,
+      };
+
+      if (shouldResetState) {
+        resetState(state, true);
       }
     },
   },
