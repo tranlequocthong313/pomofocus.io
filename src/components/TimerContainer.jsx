@@ -1,76 +1,103 @@
 import { Button, Tabs } from 'antd';
 import style from './TimerContainer.module.css';
 import Timer from './Timer';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTab, pause, start } from '../features/counter/counterSlice';
-
-const items = [
-  {
-    key: '1',
-    name: 'main',
-    label: 'Pomodoro',
-    color: '--primary-bg-color',
-  },
-  {
-    key: '2',
-    name: 'shortBreak',
-    label: 'Short Break',
-    color: '--secondary-bg-color',
-  },
-  {
-    key: '3',
-    name: 'longBreak',
-    label: 'Long Break',
-    color: '--third-bg-color',
-  },
-];
+import { changeTab, pause, skip, start } from '../features/timerSlice';
+import { StepForwardOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 const TimerContainer = () => {
-  const [tab, setTab] = useState(0);
+  const { t } = useTranslation();
+  const items = useMemo(
+    () => [
+      {
+        key: '1',
+        name: 'main',
+        label: 'Pomodoro',
+        color: '--primary-bg-color',
+        siteIcon: 'favicon-main.png',
+      },
+      {
+        key: '2',
+        name: 'shortBreak',
+        label: t('Short Break'),
+        color: '--secondary-bg-color',
+        siteIcon: 'favicon-short-green.png',
+      },
+      {
+        key: '3',
+        name: 'longBreak',
+        label: t('Long Break'),
+        color: '--third-bg-color',
+        siteIcon: 'favicon-long-blue.png',
+      },
+    ],
+    [t]
+  );
   const dispatch = useDispatch();
-  const { isRunning } = useSelector((state) => state.counter);
+  const isRunning = useSelector((state) => state.timer.isRunning);
+  const tab = useSelector((state) => state.timer.tab);
+
+  console.log('TimerContainer');
 
   const onChangeTab = (tabIndex) => {
-    setTab(tabIndex - 1);
     dispatch(changeTab(items[tabIndex - 1].name));
   };
 
   useEffect(() => {
-    document.documentElement.style.backgroundColor = `var(${items[tab].color})`;
-  }, [tab]);
+    const item = items.find((item) => item.name === tab);
+    document.documentElement.style.backgroundColor = `var(${item.color})`;
+    document.getElementById('favicon').setAttribute('href', item.siteIcon);
+  }, [tab, items, isRunning]);
 
   const getColor = () => {
-    return `var(${items[tab].color})`;
+    return `var(${getTab().color})`;
+  };
+
+  const getTab = () => {
+    return items.find((item) => item.name === tab);
   };
 
   return (
     <div className={style.container}>
       <Tabs
         onChange={onChangeTab}
-        defaultActiveKey='main'
+        defaultActiveKey='1'
         items={items}
         centered
         type='card'
+        activeKey={getTab().key}
         tabBarGutter={0}
       />
 
       <Timer />
 
-      <Button
-        className={style.startButton}
-        style={{ color: getColor() }}
-        color='inherit'
-        onClick={() => {
-          if (isRunning) {
-            dispatch(pause());
-          } else {
-            dispatch(start());
-          }
-        }}
-      >
-        {isRunning ? 'Pause' : 'Start'}
-      </Button>
+      <div className={style.actions}>
+        <Button
+          className={style.actionButton}
+          style={{ color: getColor() }}
+          color='inherit'
+          onClick={() => {
+            if (isRunning) {
+              dispatch(pause());
+            } else {
+              dispatch(start());
+            }
+          }}
+        >
+          {isRunning ? t('Pause') : t('Start')}
+        </Button>
+
+        <StepForwardOutlined
+          onClick={() => dispatch(skip())}
+          className={classNames(
+            style.skipIcon,
+            isRunning ? style.visible : null
+          )}
+        />
+      </div>
     </div>
   );
 };

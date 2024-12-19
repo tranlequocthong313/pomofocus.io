@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import './App.css';
+import style from './App.module.css';
 import Navbar from './components/Navbar';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 
 const App = () => {
   return (
-    <div style={{ maxWidth: '620px', margin: '0 auto', padding: '0 16px' }}>
+    <div className={style.app}>
       <Navbar />
       <main>
         <Routes>

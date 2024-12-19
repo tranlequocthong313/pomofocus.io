@@ -29,3 +29,21 @@ body {
 .ant-tabs-tab-active {
   font-weight: bold;
 }
+
+.ant-menu-item-selected {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.ant-modal-close:hover {
+  background-color: white !important;
+}
+
+.ant-switch-checked {
+  background-color: rgba(132, 199, 51, 0.8) !important;
+}
