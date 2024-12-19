@@ -1,9 +1,9 @@
 import { Button, Tabs } from 'antd';
 import style from './TimerContainer.module.css';
-import Timer from './Timer';
+import Timer from '../Timer';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTab, pause, skip, start } from '../features/timerSlice';
+import { changeTab, pause, skip, start } from '../../features/timerSlice';
 import { StepForwardOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';

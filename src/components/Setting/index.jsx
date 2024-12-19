@@ -9,9 +9,9 @@ import {
 import style from './Setting.module.css';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSetting } from '../features/timerSlice';
-import { changeSetting as taskChangeSetting } from '../features/taskSlice';
-import { changeLanguage } from '../features/settingSlice';
+import { changeSetting } from '../../features/timerSlice';
+import { changeSetting as taskChangeSetting } from '../../features/taskSlice';
+import { changeLanguage } from '../../features/settingSlice';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';

@@ -9,24 +9,24 @@ const Stats = () => {
 
   console.log('Stats');
 
-  const getTotalFinishedCount = () => {
-    return tasks.reduce((total, task) => total + +task.finishedCount, 0);
+  const getTotalActCount = () => {
+    return tasks.reduce((total, task) => total + +task.act, 0);
   };
 
   const getTotalEst = () => {
     return tasks.reduce((total, task) => {
-      const finishedCount = +task.finishedCount;
+      const act = +task.act;
       const est = +task.est;
       if (task.done) {
-        return total + finishedCount;
+        return total + act;
       }
-      return total + Math.max(finishedCount, est);
+      return total + Math.max(act, est);
     }, 0);
   };
 
   const getFinishTimeFormat = () => {
     const now = Date.now();
-    const leftEst = getTotalEst() - getTotalFinishedCount();
+    const leftEst = getTotalEst() - getTotalActCount();
     const time = new Date(now + minutes * leftEst * 60000);
     const hours = time.getHours();
     const mins = time.getMinutes();
@@ -37,7 +37,7 @@ const Stats = () => {
 
   const getFinishHourFormat = () => {
     const now = new Date().getTime();
-    const leftEst = getTotalEst() - getTotalFinishedCount();
+    const leftEst = getTotalEst() - getTotalActCount();
     return Number.parseFloat(
       (
         Math.abs(now - new Date(now + minutes * leftEst * 60000)) / 36e5
@@ -48,7 +48,7 @@ const Stats = () => {
   return tasks && tasks.length ? (
     <div className={style.container}>
       <div className={style.item}>
-        Pomos: <span className={style.number}>{getTotalFinishedCount()}</span>
+        Pomos: <span className={style.number}>{getTotalActCount()}</span>
         <span className={style.seperator}>/</span>
         <span className={style.number}>{getTotalEst()}</span>
       </div>

@@ -1,8 +1,8 @@
 import { Button, ConfigProvider } from 'antd';
-import style from './TaskForm.module.css';
+import style from './AddTask.module.css';
 import { PlusCircleFilled } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
-import TaskForm from './TaskForm';
+import TaskForm from '../TaskForm';
 import { useTranslation } from 'react-i18next';
 
 const AddTask = () => {

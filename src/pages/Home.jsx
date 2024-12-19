@@ -1,4 +1,4 @@
-import AddTask from '../components/AddTask';
+import AddTask from '../components/AddTask/AddTask';
 import FinishedCounter from '../components/FinishedCounter';
 import Stats from '../components/Stats';
 import TaskList from '../components/TaskList';

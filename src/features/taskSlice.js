@@ -39,7 +39,7 @@ export const taskSlice = createSlice({
       state.tasks.push({
         id: Math.random(),
         done: false,
-        finishedCount: 0,
+        act: 0,
         ...action.payload,
       });
       if (!state.selectedTask) {
@@ -56,14 +56,14 @@ export const taskSlice = createSlice({
       if (!state.selectedTask) {
         return;
       }
-      state.selectedTask.finishedCount += 1;
+      state.selectedTask.act += 1;
       state.tasks = state.tasks.map((task) => {
         if (task.id === state.selectedTask.id) {
-          task.finishedCount += 1;
+          task.act += 1;
         }
         return task;
       });
-      if (state.selectedTask.finishedCount >= state.selectedTask.est) {
+      if (state.selectedTask.act >= state.selectedTask.est) {
         if (state.setting.autoCheckTasks) {
           checkOne(
             state,
@@ -99,6 +99,22 @@ export const taskSlice = createSlice({
         return task;
       });
     },
+    clearFinished: (state) => {
+      state.tasks = state.tasks.filter((task) => !task.done);
+      state.selectedTask = state.tasks.find(
+        (task) => task.id === state.selectedTask.id
+      );
+    },
+    clearAll: (state) => {
+      state.tasks = [];
+      state.selectedTask = null;
+    },
+    clearActPomo: (state) => {
+      state.tasks = state.tasks.map((task) => {
+        task.act = 0;
+        return task;
+      });
+    },
     changeSetting: (state, action) => {
       state.setting = {
         ...state.setting,
@@ -108,7 +124,17 @@ export const taskSlice = createSlice({
   },
 });
 
-export const { save, select, check, doOne, deleteOne, update, changeSetting } =
-  taskSlice.actions;
+export const {
+  save,
+  select,
+  check,
+  doOne,
+  deleteOne,
+  update,
+  changeSetting,
+  clearActPomo,
+  clearAll,
+  clearFinished,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;

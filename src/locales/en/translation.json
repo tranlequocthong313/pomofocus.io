@@ -39,5 +39,8 @@
     "Long break must be greater than or equal 0": "Long break must be greater than or equal 0",
     "Invalid long break interval": "Invalid long break interval",
     "Long break interval must be greater than or equal 0": "Long break interval must be greater than or equal 0",
-    "Invalid language": "Invalid language"
+    "Invalid language": "Invalid language",
+    "Clear finished tasks": "Clear finished tasks",
+    "Clear act pomodoros": "Clear act pomodoros",
+    "Clear all tasks": "Clear all tasks"
 }
