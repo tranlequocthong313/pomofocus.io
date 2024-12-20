@@ -98,6 +98,9 @@ export const taskSlice = createSlice({
         }
         return task;
       });
+      state.selectedTask = state.tasks.find(
+        (task) => task.id === state.selectedTask.id
+      );
     },
     clearFinished: (state) => {
       state.tasks = state.tasks.filter((task) => !task.done);

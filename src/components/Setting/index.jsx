@@ -71,32 +71,31 @@ const Setting = ({ isOpen, onClose }) => {
   });
 
   const [main, setMain] = useState(
-    useSelector((state) => state.timer.setting.main) || 25
+    useSelector((state) => state.timer.setting.main)
   );
   const [shortBreak, setShortBreak] = useState(
-    useSelector((state) => state.timer.setting.shortBreak) || 5
+    useSelector((state) => state.timer.setting.shortBreak)
   );
   const [longBreak, setLongBreak] = useState(
-    useSelector((state) => state.timer.setting.longBreak) || 15
+    useSelector((state) => state.timer.setting.longBreak)
   );
   const [autoStartBreak, setAutoStartBreak] = useState(
-    useSelector((state) => state.timer.setting.autoStartBreak) || false
+    useSelector((state) => state.timer.setting.autoStartBreak)
   );
   const [autoStartPomo, setAutoStartPomo] = useState(
-    useSelector((state) => state.timer.setting.autoStartPomo) || false
+    useSelector((state) => state.timer.setting.autoStartPomo)
   );
   const [longBreakInterval, setLongBreakInterval] = useState(
-    useSelector((state) => state.timer.setting.longBreakInterval) || 4
+    useSelector((state) => state.timer.setting.longBreakInterval)
   );
   const [autoCheckTasks, setAutoCheckTasks] = useState(
-    useSelector((state) => state.task.setting.autoCheckTasks) || false
+    useSelector((state) => state.task.setting.autoCheckTasks)
   );
   const [autoSwitchTasks, setAutoSwitchTasks] = useState(
-    useSelector((state) => state.task.setting.autoSwitchTasks) || true
+    useSelector((state) => state.task.setting.autoSwitchTasks)
   );
-  const [language, setLanguage] = useState(
-    useSelector((state) => state.setting.language) || 'en'
-  );
+  const lang = useSelector((state) => state.setting.language);
+  const [language, setLanguage] = useState(lang);
   const dispatch = useDispatch();
 
   console.log('Setting');

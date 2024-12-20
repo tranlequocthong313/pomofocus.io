@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const ONE_SECOND = 1000;
 
-const getInitialState = () => {
+export const getInitialState = () => {
   const state = {};
 
   state.setting = {
@@ -38,7 +38,7 @@ const getInitialState = () => {
   return state;
 };
 
-const getTime = (start, mins) => {
+export const getTime = (start, mins) => {
   return new Date(start + mins * 60000).getTime();
 };
 
