@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "id": "fc426b39-ae2e-4361-88dd-9a404f2592ab",
+      "email": "tranlequocthong313@gmail.com",
+      "salt": "26874d8e0bfb25b3d7a6559a36101983",
+      "hash": "002bba50c08be17dd2d52d3164e18deff4cdf9a5829243719be159ac13a820240a966bc12ef8de9aaa350bfb23f2139b3b2d3621730e21d91a6bf56a8ec598ac"
+    }
+  ]
+}

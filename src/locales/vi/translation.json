@@ -42,5 +42,16 @@
     "Invalid language": "Ngôn ngữ không hợp lệ",
     "Clear finished tasks": "Xóa công việc đã hoàn thành",
     "Clear act pomodoros": "Xóa hành động pomodoros",
-    "Clear all tasks": "Xóa tất cả công việc"
+    "Clear all tasks": "Xóa tất cả công việc",
+    "example@mail.com": "vidu@mail.com",
+    "Password": "Mật khẩu",
+    "Sign in with Email": "Đăng nhập bằng Email",
+    "Forgot Password": "Quên mật khẩu",
+    "Do not have an account?": "Không có tài khoản?",
+    "Create account": "Tạo tài khoản",
+    "Create Account": "Tạo tài khoản",
+    "Password (Confirm)": "Mật khẩu (Xác nhận)",
+    "Sign up with Email": "Đăng ký bằng Email",
+    "Already have an account?": "Đã có tài khoản?",
+    "Sign in": "Đăng nhập"
 }

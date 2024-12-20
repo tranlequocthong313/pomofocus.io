@@ -42,5 +42,16 @@
     "Invalid language": "Invalid language",
     "Clear finished tasks": "Clear finished tasks",
     "Clear act pomodoros": "Clear act pomodoros",
-    "Clear all tasks": "Clear all tasks"
+    "Clear all tasks": "Clear all tasks",
+    "example@mail.com": "example@mail.com",
+    "Password": "Password",
+    "Sign in with Email": "Sign in with Email",
+    "Forgot Password": "Forgot Password",
+    "Do not have an account?": "Do not have an account?",
+    "Create account": "Create account",
+    "Create Account": "Create Account",
+    "Password (Confirm)": "Password (Confirm)",
+    "Sign up with Email": "Sign up with Email",
+    "Already have an account?": "Already have an account?",
+    "Sign in": "Sign in"
 }
